@@ -1,6 +1,6 @@
 .PHONY: all clean cleanall
 
-all: build/dissertation.pdf
+all: build/synopsis.pdf
 
 # %.tex: %.raw
 #         ./raw2tex $< > $@
