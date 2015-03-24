@@ -2,6 +2,34 @@
 % Выставляем значения полей (ГОСТ 7.0.11-2011, 5.3.7)
 \geometry{a4paper,top=2cm,bottom=2cm,left=2.5cm,right=1cm}
 
+\newcommand{\tr}{\mathrm{Tr}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\imath}{\mathrm{i}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+
+\newcommand{\J}{\mathcal{J}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+\renewcommand{\Re}{\mathop{\mathrm{Re}}\nolimits}
+\renewcommand{\Im}{\mathop{\mathrm{Im}}\nolimits}
+
+\renewcommand{\d}{\mathrm{d}}
+
+\newcommand{\dd}[2]{\frac{\d{#1}}{\d{#2}}}
+\newcommand{\ddd}[2]{\frac{\d^2{#1}}{\d{#2}^2}}
+\newcommand{\pd}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\pdd}[2]{\frac{\partial^2{#1}}{\partial{#2}^2}}
+\newcommand{\pdp}[3]{\frac{\partial^2{#1}}{\partial{#2}\partial{#3}}}
+\newcommand{\pdet}[1]{\det\left({#1}\right)}
+\renewcommand{\exp}[1]{\mathrm{e}^{#1}}
+\newcommand{\half}[1]{\frac{#1}{2}}
+
 %%% Кодировки и шрифты %%%
 \ifxetex
   \setmainlanguage{russian}
@@ -51,7 +79,7 @@
 
 %%% Списки %%%
 % Используем дефис для ненумерованных списков (ГОСТ 2.105-95, 4.1.7)
-\renewcommand{\labelitemi}{\normalfont\bfseries{--}} 
+\renewcommand{\labelitemi}{\normalfont\bfseries{--}}
 
 %%% Колонтитулы %%%
 % Порядковый номер страницы печатают на середине верхнего поля страницы (ГОСТ Р 7.0.11-2011, 5.3.8)
