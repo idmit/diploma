@@ -5,7 +5,7 @@ all: build/synopsis.pdf
 build/%.pdf: %.tex
 	latexmk -xelatex -outdir=build -use-make $<
 	cp $@ ../$%
-	open $@
+	# open $@
 
 clean:
 	latexmk -outdir=build -c
