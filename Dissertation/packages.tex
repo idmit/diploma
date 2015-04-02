@@ -10,9 +10,6 @@
 \usepackage{mathtools}
 \mathtoolsset{showonlyrefs}
 
-\theoremstyle{definition}
-\newtheorem{define}{Определение}
-
 %%% Кодировки и шрифты %%%
 \ifxetex
   \usepackage{polyglossia}                          % Поддержка многоязычности
@@ -24,6 +21,9 @@
   \usepackage[english, russian]{babel}              % Языки: русский, английский
   \IfFileExists{pscyr.sty}{\usepackage{pscyr}}{}    % Красивые русские шрифты
 \fi
+
+\theoremstyle{definition}
+\newtheorem{define}{Определение}
 
 %%% Оформление абзацев %%%
 \usepackage{indentfirst}                            % Красная строка
