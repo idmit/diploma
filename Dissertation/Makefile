@@ -1,14 +1,24 @@
-.PHONY: all clean cleanall
+TARGET   = build/dissertation.pdf
+TARGET_SRC = $(patsubst $(BUILDDIR)/%.pdf, $(SRCDIR)/%.tex, $(TARGET))
+SRCDIR   = .
+BUILDDIR = build
 
-all: build/dissertation.pdf
+.PHONY: destdir all clean cleanall
 
-build/%.pdf: %.tex
-	latexmk -xelatex -outdir=build -use-make $<
-	cp $@ ../$%
-	open $@
+all: $(TARGET)
+
+OBJECTS = $(wildcard $(SRCDIR)/*.tex)
+
+.PRECIOUS: $(TARGET) $(OBJECTS)
+
+$(TARGET): destdir $(OBJECTS)
+	latexmk -xelatex -outdir=$(BUILDDIR) -use-make $(TARGET_SRC)
+
+destdir:
+	mkdir -p ./$(BUILDDIR)
 
 clean:
-	latexmk -outdir=build -c
+	latexmk -outdir=$(BUILDDIR) -c
 
 cleanall:
-	latexmk -outdir=build -CA
+	latexmk -outdir=$(BUILDDIR) -CA
