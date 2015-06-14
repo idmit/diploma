@@ -1,9 +1,12 @@
 %%% Проверка используемого TeX-движка %%%
 \usepackage{ifxetex}
 
+%%% Проверка LaTeX синтаксиса %%%
+\usepackage[l2tabu, orthodox]{nag}                  % Предупреждения об опасном синтаксисе
+
 %%% Поля и разметка страницы %%%
 \usepackage{lscape}                                 % Для включения альбомных страниц
-\usepackage{geometry}                               % Для последующего задания полей
+\usepackage[headheight=110pt]{geometry}                               % Для последующего задания полей
 
 %%% Математические пакеты %%%
 \usepackage{amsthm,amsfonts,amsmath,amssymb,amscd}  % Математические дополнения от AMS
@@ -22,6 +25,7 @@
   \usepackage[english, russian]{babel}              % Языки: русский, английский
   \IfFileExists{pscyr.sty}{\usepackage{pscyr}}{}    % Красивые русские шрифты
 \fi
+\usepackage{microtype}                              % Мелкие улучшения
 
 %%% Оформление абзацев %%%
 \usepackage{indentfirst}                            % Красная строка
