@@ -1,9 +1,11 @@
-\documentclass[14pt]{beamer}
+\documentclass[12pt]{beamer}
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
-\usepackage{amssymb,amsfonts,amsmath,mathtext}
+\usepackage{amssymb,amsfonts,amsmath,mathtext, mathtools}
+\mathtoolsset{showonlyrefs}
 \usepackage{cite,enumerate,float,indentfirst}
+\usepackage{subcaption}
 
 \graphicspath{{images/}}
 
@@ -15,10 +17,10 @@
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{}%
-    И. О. Фамилия, Организация
+    И. П. Дмитриевский, СПбГПУ
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{}%
-    Город, 20XX
+    Санкт-Петербург, 2015
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{}%
   Стр. \insertframenumber{} из \inserttotalframenumber \hspace*{2ex}
@@ -28,183 +30,105 @@
 
 \newcommand{\itemi}{\item[\checkmark]}
 
-\title{\small{Название презентации}}
+\input{../names}           % Переопределение именований
+
+\title{\small{Изучение связей между оценками параметров моделей случайных процессов с помощью копул}}
 \author{\small{%
-\emph{Выступающий:}~И.О.Фамилия\\%
-\emph{Руководитель:}~проф.,~к.ф.-м.н.~И.О.Фамилия}\\%
+\emph{Выступающий:}~И. П. Дмитриевский\\%
+\emph{Руководитель:}~доц.,~к.ф.-м.н.~А. А. Иванков}\\%
 \vspace{30pt}%
-Полное название\\
-организации%
+Санкт-Петербургский государственный политехнический университет%
 \vspace{20pt}%
 }
-\date{\small{Город, 20XX}}
+\date{\small{Санкт-Петербург, 2015}}
 
 \begin{document}
 
 \maketitle
 
 \begin{frame}
-\frametitle{Цели и задачи}
-\begin{itemize}
-  \item \textbf{Предмет исследования:} 
-  \item \textbf{Исследуемые характеристики:} 
-  \item \textbf{Цель исследования:} 
-  \item \textbf{Актуальность:} 
-\end{itemize}
+\frametitle{Коэффициент корреляции Пирсона}
+\begin{figure}\label{fig:pearson}
+\centering
+\begin{subfigure}{.49\textwidth}
+  \centering
+  \includegraphics[width = \textwidth]{./images/normscatter.png}
+  \caption{$(x, y) \sim \mathcal{N}, \rho = 0.06 $}
+  \label{fig:norm}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+  \centering
+  \includegraphics[width = \textwidth]{./images/transformed_normscatter.png}
+  \caption{$(x, y) = (\e^x, \e^{2y}), \rho = -0.33$}
+  \label{fig:transnorm}
+\end{subfigure}
+\end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Проблемы}
-\begin{itemize}
-  \item Проблема 1
-  \item Проблема 2
-  \item Проблема 3    
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{План работ}
+\frametitle{Копулы}
+\emph{Двумерной копулой} называется функция $C$, удовлетворяющая следующим свойствам:
 \begin{enumerate}
-  \item \textbf{Задача 1}
-  \begin{itemize}
-    \item Подзадача 1-1
-    \item Подзадача 1-2
-  \end{itemize}
-  \item \textbf{Задача 2}
-  \begin{itemize}
-    \item Подзадача 2-1
-    \item Подзадача 2-2
-    \item Подзадача 2-3
-  \end{itemize}
-  \item \textbf{Задача 3}
-  \begin{itemize}
-    \item Подзадача 3-1
-    \item Подзадача 3-2
-    \item Подзадача 3-3
-  \end{itemize}
+\item $\Dom{C} = I^2$;
+\item $\forall u,v \in I : C(u, 0) = 0 = C(0, v)$;
+\item $\forall B = [x_1, x_2] \times [y_1, y_2] \subset I^2 : \Diff_{y_1}^{y_2}\Diff_{x_1}^{x_2}C(x, y) \geqslant 0$;
+\item Для каждых $u, v \in I$:
+  \begin{gather}
+    C(u, 1) = u \\
+    C(1, v) = v.
+  \end{gather}
 \end{enumerate}
 \end{frame}
 
 \begin{frame}
-\frametitle{Список обыкновенный}
-\begin{itemize}
-  \item Пункт 1
-  \item Пункт 2
-  \item Пункт 3
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Одиночное изображение}
+\frametitle{Примеры копул}
 \begin{figure}[H]
-  \center
-  \includegraphics[width=0.8\linewidth]{latex}
+  \centering
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{W.png}
+    \caption{$z = W(u, v)$}
+  \end{subfigure}%
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{P.png}
+    \caption{$z = P(u, v)$}
+  \end{subfigure}
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{M.png}
+    \caption{$z = M(u, v)$}
+  \end{subfigure}
+  \caption{Графики копул $W$, $P$ и $M$}
 \end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Формулы}
-$$
-\left\{
-  \begin{array}{rl}
-    \dot x = & \sigma (y-x) \\
-    \dot y = & x (r - z) - y \\
-    \dot z = & xy - bz
-  \end{array}
-\right.
-$$
-\end{frame}
-
-\begin{frame}
-\frametitle{Составное изображение}
-\begin{figure}[h]
-  \begin{minipage}[h]{0.49\linewidth}
-    \textbf{Составная \\ подпись 1}
-    \center{\includegraphics[width=1\linewidth]{knuth1}}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[h]{0.49\linewidth}
-    \textbf{Составная \\ подпись 2}
-    \center{\includegraphics[width=1\linewidth]{knuth2}}
-  \end{minipage}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Таблица}
-\begin{tabular}{|l|l|}
-\hline
-\textbf{Заголовок 1} & \textbf{Заголовок 2} \\
-\hline
-Сумма & $b+a$ \\
-\hline
-Разность & $a-b$ \\
-\hline
-Произведение & $a*b$ \\
-\hline
-\end{tabular}
-\end{frame}
-
-\begin{frame}
-\frametitle{Большой многоуровневый список}
+\frametitle{Теорема Скляра и теорема об инвариантности}
 \begin{itemize}
-  \item \textbf{Пункт 1}
-    \begin{itemize}
-      \itemi Подпункт 1-1
-      \itemi Подпункт 1-2
-    \end{itemize}
-  \item \textbf{Пункт 2}
-    \begin{itemize}
-      \itemi Подпункт 2-1
-    \end{itemize}
-  \item \textbf{Пункт 3}
-    \begin{itemize}
-      \itemi Подпункт 3-1
-      \itemi Подпункт 3-2
-    \end{itemize}
-  \item \textbf{Пункт 4}
-    \begin{itemize}
-      \itemi Подпункт 4-1
-    \end{itemize}
-  \item \textbf{Пункт 5}
-    \begin{itemize}
-      \itemi Подпункт 5-1
-      \itemi Подпункт 5-2
-      \itemi Подпункт 5-3
-    \end{itemize}
+\item Пусть $X, Y$ --- случайные величины с распределениями $F, G$ соответственно, и совместным распределением $H$. Тогда выполняется уравнение
+\begin{equation}
+  H(x, y) = C(F(x), G(y)).
+\end{equation}
+Если $F$ и $G$ непрерывны, то $C$ единственна;
+
+\item Пусть $X, Y$ --- непрерывные случайные величины c копулой $C_{XY}$. Если $\alpha$ и $\beta$ строго возрастают на $\Ran{X}$ и $\Ran{Y}$ соответственно, то $C_{\alpha(X)\beta(Y)} = C_{XY}$. Таким образом $C_{XY}$ инвариантна относительно строго возрастающих преобразований $X$ и $Y$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Четыре изображения}
-\begin{figure}[H]
-  \center
-    \includegraphics[width=0.4\linewidth]{latex}
-    \includegraphics[width=0.4\linewidth]{latex}\\
-    \includegraphics[width=0.4\linewidth]{latex}
-    \includegraphics[width=0.4\linewidth]{latex}
-\end{figure}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Перспективы развития проекта}
+\frametitle{Коэффициент ранговой корреляции Кендалла}
 \begin{itemize}
-  \item Перспектива 1
-  \item Перспектива 2
-  \item Перспектива 3
-  \item Перспектива 4
-  \item Перспектива 5
-\end{itemize}
-\end{frame}
+  \item \emph{Коэффициентом ранговой корреляции} вектора случайных величин $\trans{(X, Y)}$ называется величина
+\begin{equation}
+  \tau(X, Y) = \P\{\, (X - \widetilde{X})(Y - \widetilde{Y}) > 0 \,\} - \P\{\, (X - \widetilde{X})(Y - \widetilde{Y}) < 0 \,\},
+\end{equation}
+где $\trans{(\widetilde{X}, \widetilde{Y})}$ --- независимая копия $\trans{(X, Y)}$. \par
 
-\begin{frame}
-\frametitle{Результаты работы}
-\begin{itemize}
-  \item Результат 1
-  \item Результат 2
-  \item Результат 3
-  \item Результат 4
+\item Пусть $X, Y$ --- непрерывные случайные величины с копулой $C$, тогда их коэффициенту Кендалла соответствует выражение
+  \[
+  \tau(X, Y) = \tau_C = 4 \iint_{I^2} C(u, v) \d C(u,v) - 1.
+  \]
 \end{itemize}
 \end{frame}
 
@@ -214,4 +138,4 @@ $$
 \end{center}
 \end{frame}
 
-\end{document} 
+\end{document}
