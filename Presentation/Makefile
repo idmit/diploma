@@ -12,7 +12,7 @@ OBJECTS = $(wildcard $(SRCDIR)/*.tex)
 .PRECIOUS: $(TARGET) $(OBJECTS)
 
 $(TARGET): destdir $(OBJECTS)
-	latexmk -pdf -outdir=$(BUILDDIR) -use-make $(TARGET_SRC)
+	latexmk -xelatex -outdir=$(BUILDDIR) -use-make $(TARGET_SRC)
 
 destdir:
 	mkdir -p ./$(BUILDDIR)
