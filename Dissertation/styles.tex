@@ -33,6 +33,13 @@
 
 %%% Изображения %%%
 \graphicspath{{images/}}            % Пути к изображениям
+\usepackage{chngcntr}
+\counterwithin{figure}{chapter}
+\usepackage{caption}
+\DeclareCaptionLabelSeparator{bar}{ --- }
+\captionsetup{
+  labelsep=bar
+}
 
 %%% Цвета гиперссылок %%%
 \definecolor{linkcolor}{rgb}{0,0,0}
@@ -60,7 +67,7 @@
 \makeatother
 \pagestyle{fancy}                   % Меняем стиль оформления страниц
 \fancyhf{}                          % Очищаем текущие значения
-\fancyhead[C]{\thepage}             % Печатаем номер страницы на середине верхнего поля
+\fancyfoot[C]{\thepage}             % Печатаем номер страницы на середине верхнего поля
 \renewcommand{\headrulewidth}{0pt}  % Убираем разделительную линию
 
 \newtheorem{theorem}{Теорема}
