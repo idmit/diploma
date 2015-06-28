@@ -10,10 +10,104 @@
 
 \usetheme[usetitleprogressbar, usetotalslideindicator, nooffset]{m}
 
+% title page template
+\makeatletter
+\setbeamertemplate{title page}
+{
+    \ifx\insertinstitute\@empty\else
+    % \insertinstitute is nonempty
+    \vspace*{0.5cm}
+    \begin{minipage}[b][\paperheight]{\textwidth}
+    \begin{minipage}[c]{\textwidth}
+      {{
+        \begin{center}
+        \usebeamerfont{institute}%
+        \usebeamercolor[fg]{institute}%
+        \insertinstitute%
+        \end{center}
+      }}
+    \end{minipage}
+    \fi
+
+    \vspace*{1cm}
+
+    \ifx\inserttitlegraphic\@empty\else
+    {% \inserttitlegraphic is nonempty
+      \vbox to 0pt
+      {% display title graphic without changing the position of other elements
+        \vspace*{2em}
+        \usebeamercolor[fg]{titlegraphic}%
+        \inserttitlegraphic%
+      }%
+      \nointerlineskip%
+    }
+    \fi
+
+    \vfill%
+
+  \ifx\inserttitle\@empty\else
+    {{% \inserttitle is nonempty
+      \raggedright%
+      \linespread{1.0}%
+      \usebeamerfont{title}%
+      \usebeamercolor[fg]{title}%
+      \begin{center}
+      \scshape \inserttitle%
+      \end{center}
+    }}
+    \fi
+
+    \ifx\insertsubtitle\@empty\else
+    {{% \insertsubtitle is nonempty
+      \usebeamerfont{subtitle}%
+      \usebeamercolor[fg]{subtitle}%
+      \centering
+      \insertsubtitle%
+      \vspace*{0.5em}%
+    }}
+    \fi
+
+    \begin{tikzpicture}
+      \usebeamercolor{title separator}
+      \draw[fg] (0, 0) -- (\textwidth, 0);
+    \end{tikzpicture}%
+    % \vspace*{1em}%
+
+    \ifx\beamer@shortauthor\@empty\else
+    {{% \insertauthor is always nonempty by beamer's definition, so we must
+      % test another macro which is initialized by \author{...}
+      % For details, see http://tex.stackexchange.com/questions/241306/
+      \usebeamerfont{author}%
+      \usebeamercolor[fg]{author}%
+      \insertauthor%
+      \par%
+      \vspace*{0.25em}
+    }}
+    \fi
+
+    \ifx\insertdate\@empty\else
+    {{% \insertdate is nonempty
+      \usebeamerfont{date}%
+      \usebeamercolor[fg]{date}%
+      \begin{center}
+      \insertdate%
+      \end{center}
+      \par%
+    }}
+    \fi
+
+    \vfill
+    \vspace*{1cm}
+
+  \end{minipage}
+}
+\makeatother
+
 \input{names}           % Переопределение именований
 
-\institute{\center\footnotesize{Кафедра прикладной математики и информатики \\ Институт прикладной математики и механики \\ Cанкт-Петербургский политехнический университет Петра Великого}}
-\title{Изучение связей между оценками \\ параметров моделей случайных процессов с помощью копул}
+\institute{\center\footnotesize{Cанкт-Петербургский политехнический университет Петра Великого \\ Институт прикладной математики и механики \\ Кафедра прикладной математики и информатики}}
+\title{Изучение связей между оценками \\ параметров моделей случайных процессов с помощью копул \\ {\small Выпускная работа бакалавра}}
+% \subtitle
 \author{\small{%
 Выступающий ст. гр. 43601/2: \hfill ~И. П. Дмитриевский\\%
 Руководитель:~доц.,~к.ф.-м.н. \hfill ~А. А. Иванков}\\%
