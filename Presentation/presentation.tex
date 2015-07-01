@@ -109,19 +109,19 @@
 \title{Изучение связей между оценками \\ параметров моделей случайных процессов с помощью копул \\ {\small Выпускная работа бакалавра}}
 % \subtitle
 \author{\small{%
-Выступающий ст. гр. 43601/2: \hfill ~И. П. Дмитриевский\\%
+Выполнил ст. гр. 43601/2: \hfill ~И. П. Дмитриевский\\%
 Руководитель:~доц.,~к.ф.-м.н. \hfill ~А. А. Иванков}\\%
 \vfill
 }
 \date{\small{Санкт-Петербург, 2015}}
 
 \begin{document}
-
+\renewcommand{\inserttotalframenumber}{20}
 \maketitle
 
 \begin{frame}
 \frametitle{Модель случайного процесса}
-\begin{equation}
+\begin{equation}\label{eq:x}
 X(t) = Z(t) + Y(t)
 \end{equation}
 \begin{equation}
@@ -136,6 +136,7 @@ Y(t) = \sum_{j=0}^K P_j \cdot I(t - \tau_j) \cdot e^{-\lambda_c(t - \tau_j)}
   \item $I$~---~функция Хевисайда;
   \item $\lambda_c$~---~константа, одинаковая для всех событий;
   \item $P_j \sim Pareto(x_m, \alpha)$;
+  \item $\Diff\tau_j \sim Exp(\lambda)$;
 \end{itemize}
 \begin{equation}
 (\mu, \sigma, x_m, \alpha, \lambda, \lambda_c)
@@ -145,9 +146,15 @@ Y(t) = \sum_{j=0}^K P_j \cdot I(t - \tau_j) \cdot e^{-\lambda_c(t - \tau_j)}
 \begin{frame}
 \frametitle{Оценивание параметров модели $X(t)$}
 \begin{itemize}
-  \item Реализован алгоритм оценивания параметров модели процесса (Сидоровская, 2015 г.);
+  \item Алгоритм оценивания параметров модели процесса \eqref{eq:x} реализован в [Сидоровская, 2015 г.];
   \item В рамках реализованного подхода наиболее критичный этап --- интервальное оценивание;
-  \item Интервальное оценивание осуществляется композицией нескольких алгоритмов, порождающих границы компакта;
+  \item Интервальное оценивание --- композиция нескольких алгоритмов, доставляющих границы компакта;
+\end{itemize}
+\begin{equation}
+  IE(X(t), \overline{\xi}) \colon X(t) \to \R^{12}
+\end{equation}
+\begin{itemize}
+  \item $\overline{\xi}$ --- вектор параметров алгоритма.
 \end{itemize}
 \end{frame}
 
@@ -168,9 +175,9 @@ Y(t) = \sum_{j=0}^K P_j \cdot I(t - \tau_j) \cdot e^{-\lambda_c(t - \tau_j)}
 \begin{frame}
 \frametitle{Выбранный метод}
 \begin{itemize}
-  \item Различные коэффициенты корреляции дают слабое представление о структуре связи;
-  \item Для глубокого изучения связей требуется аппроксимировать двумерное распределение;
-  \item Копулы дают более полное описание стохастической связи, чем коэффициенты корреляции;
+  \item Коэффициенты корреляции дают слабое представление о структуре связи;
+  \item Более полное изучение связей требует построения оценок совместных распределений;
+  \item Копулы --- инструмент для аппроксимации совместных распределений;
 \end{itemize}
 \end{frame}
 
@@ -184,7 +191,7 @@ H(x, y) = C(F(x), G(y))
 \begin{itemize}
   \item Теория копул активно развивается;
   \item Копулы успешно применяются для решения различных прикладных задач;
-  \item Копулы являются гибким инструментом для исследования связей;
+  \item Копулы являются гибким инструментом для исследования стохастических связей;
 \end{itemize}
 \end{center}
 \end{frame}
@@ -194,13 +201,13 @@ H(x, y) = C(F(x), G(y))
 \frametitle{Аппроксимируемые распределения}
 \begin{itemize}
   \item Пусть $s$ --- модельное значение параметра $\sigma$, для которого получены $\sigma_1, \sigma_2$ --- оценки границ компакта;
-  \item Вводится случайная величина $\omega_{(\sigma = s)}$:
+  \item Определим случайную величину $\omega_{(\sigma = s)}$:
   \begin{itemize}
     \item $\omega_{(\sigma = s)}(s \notin [\sigma_1, \sigma_2]) = 0$;
     \item $\omega_{(\sigma = s)}(s \in [\sigma_1, \sigma_2]) = 1$;
   \end{itemize}
-  \item Аппроксимируются вероятности $\widehat{p}_{(\sigma = s)} = \P\{\, \omega_{(\sigma = s)} = 1\,\}$;
-  \item Аналогичные построения выполняются для пар параметров с соответствующими значениями;
+  \item Построим аппроксимацию распределения $\widehat{p}_{(\sigma = s)} = \P\{\, \omega_{(\sigma = s)} = 1\,\}$;
+  \item Аналогичные построения выполняются для всех пар параметров;
 \end{itemize}
 \end{center}
 \end{frame}
@@ -221,35 +228,171 @@ H(x, y) = C(F(x), G(y))
 \end{frame}
 
 \begin{frame}
+\frametitle{Метод отражений}
+\begin{equation}
+  ({U}_i, {V}) = (F_X(X), F_Y(Y));
+\end{equation}
+\begin{itemize}
+  \item Алгоритм аппроксимации использует $(\widehat{U}_i, \widehat{V}_i) = (F_{X, T}(X_i), F_{Y, T}(Y_i))$;
+  \item Дополнительно используются отражения относительно границ и углов области определения копулы (единичного квадрата);
+  \item Строится аппроксимация распределения и сглаживается фильтром Гаусса;
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \begin{center}
-\frametitle{Пример плотности копулы связанной с параметрами $\sigma$ и $x_m$}
-\resizebox{\columnwidth}{!}{\input{plot_10_20_1000}}
-{\small Рис. 1 --- Плотность распределения указанной копулы}
+\frametitle{Результат аппроксимации методом отражений}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.56\textwidth]{FrankMirror.png}
+  \caption{Графики оценённой (метод отражений, 1000 наблюдений) и теоретической плотностей копулы Фрэнка}
+\end{figure}
 \end{center}
 \end{frame}
+
+\begin{frame}
+\frametitle{Метод преобразований}
+\begin{itemize}
+  \item $G$ --- непрерывная функция распределения на $\R$;
+  \item $g$ --- положительная плотность $G$;
+  \item Плотность $(\widetilde{X}, \widetilde{Y})$, где $\widetilde{X} = G^{-1}(U)$ и $\widetilde{V} = G^{-1}(V)$, равна
+\begin{equation}\label{eq:transform_method}
+f(x, y) = g(x)g(y)c(G(x), G(y)),
+\end{equation}
+где $c$ --- аппроксимируемая копула;
+\item $f$ аппроксимируется по формуле
+\begin{equation}
+\widehat{f}(x, y) = \frac{1}{T h^2} \sum_{i=1}^T K\brts*{\frac{x - \widetilde{X}}{h}, \frac{y - \widetilde{Y}}{h}},
+\end{equation}
+где $K$ --- сглаживающий фильтр.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\frametitle{Результат аппроксимации методом преобразований}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.56\textwidth]{FrankTransform.png}
+  \caption{Графики оценённой (метод преобразований, 1000 наблюдений) и теоретической плотностей копулы Фрэнка}
+\end{figure}
+\end{center}
+\end{frame}
+
+\setbeamertemplate{frametitle}
+{
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=5.5ex,dp=1.5ex]{frametitle}
+    \usebeamerfont{frametitle}%
+    \scshape \protect\insertframetitle%
+  \end{beamercolorbox}%
+
+  \if@useTitleProgressBar
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
+      \progressbar{\paperwidth}
+    \end{beamercolorbox}
+  \fi
+}
+\makeatother
+
+\begin{frame}
+\begin{center}
+\frametitle{Пример визуализации копулы для оценок границ компактов параметров $\sigma$ и $x_m$}
+\resizebox{\columnwidth}{!}{\input{plot_11_40_1000}}
+{\small Рис. 3 Плотность распределения указанной копулы}
+\end{center}
+\end{frame}
+
+\setbeamertemplate{frametitle}
+{
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
+    \usebeamerfont{frametitle}%
+    \scshape \protect\insertframetitle%
+  \end{beamercolorbox}%
+
+  \if@useTitleProgressBar
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
+      \progressbar{\paperwidth}
+    \end{beamercolorbox}
+  \fi
+}
+\makeatother
 
 \begin{frame}
 \begin{center}
 \frametitle{График плотности распределения ординат $Z(t)$ и $Y(t)$}
-{\small Рис. 2 --- Плотности распределения указанных процессов при фиксированном $t$}
+{\small Рис. 4 Плотности распределения ординат указанных процессов при фиксированном $t$}
 \resizebox{\columnwidth}{!}{\input{ZY}}
 \end{center}
 \end{frame}
 
+\setbeamertemplate{frametitle}
+{
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=5.5ex,dp=1.5ex]{frametitle}
+    \usebeamerfont{frametitle}%
+    \scshape \protect\insertframetitle%
+  \end{beamercolorbox}%
+
+  \if@useTitleProgressBar
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
+      \progressbar{\paperwidth}
+    \end{beamercolorbox}
+  \fi
+}
+\makeatother
+
 \begin{frame}
 \begin{center}
-\frametitle{Пример иной плотности связанной с параметрами $\sigma$ и $x_m$}
-\resizebox{\columnwidth}{!}{\input{plot_10_21_1000}}
-{\small Рис. 3 --- Плотность распределения указанной копулы}
+\frametitle{Пример визуализации копулы для оценок границ компактов параметров $\sigma$ и $x_m$ с б\'{о}льшим модельным значением}
+\resizebox{\columnwidth}{!}{\input{plot_11_41_1000}}
+{\small Рис. 5 Плотность распределения указанной копулы}
 \end{center}
 \end{frame}
 
 \begin{frame}
 \begin{center}
-\frametitle{Один из выводов из анализа результатов оценивания}
+\frametitle{Пример визуализации копулы для оценок границ компактов параметров $\sigma$ и $\lambda$}
+\resizebox{\columnwidth}{!}{\input{plot_10_20_1000}}
+{\small Рис. 6 Плотность распределения указанной копулы}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\frametitle{Пример визуализации копулы для оценок границ компактов параметров $\sigma$ и $\lambda$ с б\'{о}льшим модельным значением}
+\resizebox{\columnwidth}{!}{\input{plot_10_21_1000}}
+{\small Рис. 7 Плотность распределения указанной копулы}
+\end{center}
+\end{frame}
+
+\setbeamertemplate{frametitle}
+{
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
+    \usebeamerfont{frametitle}%
+    \scshape \protect\insertframetitle%
+  \end{beamercolorbox}%
+
+  \if@useTitleProgressBar
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
+      \progressbar{\paperwidth}
+    \end{beamercolorbox}
+  \fi
+}
+\makeatother
+
+\begin{frame}
+\begin{center}
+\frametitle{Один из выводов на основе результатов оценивания}
 \begin{itemize}
-  \item Форма копулы подтвердила априорные предположения о характере связи оценок $\sigma$ и $x_m$;
-  \item При малом модельном значении $x_m$ копула продемонстрировала наличие неизвестной ранее связи между этими оценками;
+  \item Оценка в форме копулы подтвердила априорные предположения о характере связи результатов построения компактов для $\sigma$ и $x_m$;
+  \item При малом модельном значении $x_m$ оценка копулы позволяет выделить подмножество пар значений параметров, для которых необходимо провести следующий этап исследований свойств композиции алгоритмов построения интервальных оценок;
 \end{itemize}
 \end{center}
 \end{frame}
@@ -259,10 +402,19 @@ H(x, y) = C(F(x), G(y))
 \frametitle{Результаты}
 \begin{itemize}
   \item Создан программный пакет, позволяющий строить вероятностные модели в форме композиции распределений и копул;
-  \item Построены оценки копул согласно модели процесса (243 шт.);
-  \item Эти оценки выявили ряд неожиданных зависимостей между оценками параметров модели;
-  \item Описанный и реализованный подход применим для анализа результатов оценивания параметров произвольных случайных процессов;
-  \item Также он может быть успешно применён для решения задач в рамках подхода Data Mining;
+  \item Построены оценки копул согласно модели процесса \eqref{eq:x} (243 шт.);
+  \item Эти оценки выявили ряд зависимостей между результатами построения границ компактов в параметрическом пространстве процесса \eqref{eq:x};
+  \item Такие зависимости --- основание для проведения дальнейших исследований алгоритма построения границ компакта, причём копула обеспечивает нас информацией о том, на каком подмножестве пар значений параметров следует сосредоточить внимание;
+\end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\frametitle{Результаты $(1)$}
+\begin{itemize}
+  \item Описанный подход может быть применён для анализа результатов оценивания параметров моделей произвольных случайных процессов;
+  \item Реализованное ПО можно использовать для решения широкого круга задач из класса Data Mining;
 \end{itemize}
 \end{center}
 \end{frame}
@@ -276,34 +428,11 @@ H(x, y) = C(F(x), G(y))
 \begin{frame}
 \frametitle{Пуассоновский поток событий $Y(t)$}
 \[Y(t) = \sum_{j = 0}^K P_j \cdot I(t - \tau_j) \cdot e^{-\lambda_c(t - \tau_j)}\]
-\begin{itemize}
-  \item $K$~---~число событий, поступивших до момента $t$;
-  \item $\tau_j$~---~время возникновения $j$-ого возмущения;
-  \item $I$~---~функция Хевисайда;
-  \item $\lambda_c$~---~константа, одинаковая для всех событий;
-  \item $P_j$~---~случайная величина, распределённая по закону Парето с параметрами $x_m$ и $\alpha$, одинаковыми для всех событий:
-\[
-f_{P_j}(x) = \begin{cases}
-\frac{\alpha x_m^\alpha}{x^{\alpha+1} }, &x \geqslant x_m,\\
-0, &x < x_m.
-\end{cases}
-\]
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Метод отражений}
-\[\hat{c}_h(u, v) = \frac{1}{Th^2}\sum_{i=1}^T\sqts*{K\brts*{\frac{u - \hat{U}_i}{h}}K\brts*{\frac{v - \hat{V}_i}{h}} + \cdots},\]
-где места $\hat{U}_i$ и $\hat{V}_i$ занимают все отражения $(\pm\hat{U}_i, \pm\hat{V}_i), (\pm\hat{U}_i, 2 - \hat{V}_i), (2- \hat{U}_i, \pm\hat{V}_i), (2 - \hat{U}_i, 2- \hat{V}_i)$.
-\end{frame}
-
-\begin{frame}
-\frametitle{Метод преобразований}
-\begin{align}
-\hat{c}_h(u, v) = &\frac{1}{Th^2g(G^{-1}(u))g(G^{-1}(v))}\times \\
-&\sum_{i=1}^T K\brts*{\frac{G^{-1}(u) - G^{-1}(\hat{U}_i)}{h},\frac{G^{-1}(v) - G^{-1}(\hat{V}_i)}{h}}
-\end{align}
-где $G$ --- функция распределения с положительной плотностью $g$.
+Интервал времени между моментами возникновения возмущений --- случайная величина, распределённая по экспоненциальному закону с параметром $\lambda$:
+\begin{gather}
+\Delta \tau_j = t_j - t_{j-1} \\
+\Delta \tau_j \sim Exp(\lambda).
+\end{gather}
 \end{frame}
 
 \begin{frame}
@@ -390,28 +519,6 @@ f_{P_j}(x) = \begin{cases}
   \tau(X, Y) = \tau_C = 4 \iint_{I^2} C(u, v) \d C(u,v) - 1.
   \]
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\begin{center}
-\frametitle{Построение эмпирических копул}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=.56\textwidth]{FrankMirror.png}
-  \caption{Графики оценённой (метод отражений, 1000 наблюдений) и истинной плотностей копулы Фрэнка}
-\end{figure}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\begin{center}
-\frametitle{Построение эмпирических копул (1)}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=.56\textwidth]{FrankTransform.png}
-  \caption{Графики оценённой (метод преобразований, 1000 наблюдений) и истинной плотностей копулы Фрэнка}
-\end{figure}
-\end{center}
 \end{frame}
 
 \end{document}
